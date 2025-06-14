@@ -26,7 +26,7 @@ function ImageDropDiv({
             onClick={() => inputRef.current.click()}
             size="huge"
           />
-          Drag & Drop or Click to upload image
+          Drag n Drop or Click to upload image
         </Header>
       </>
     ) : (
@@ -39,7 +39,7 @@ function ImageDropDiv({
           size="huge"
           centered
         />
-        Drag & Drop or Click to upload image
+        Drag n Drop or Click to upload image
       </span>
     );
 
