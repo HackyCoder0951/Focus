@@ -52,38 +52,38 @@ nodemon server.js
 
 ### Landing Page and Authantication
 
-<img width="900" alt="Screenshot 2021-09-16 at 10 32 01 AM" src="https://res.cloudinary.com/mozammalhossain/image/upload/v1639424209/FOCUS_SCREENSHOTS/landing1_mnpnmk.png">
-<img width="900" alt="Screenshot 2021-09-16 at 10 33 26 AM" src="https://res.cloudinary.com/mozammalhossain/image/upload/v1639424209/FOCUS_SCREENSHOTS/landing2_wjszr0.png">
-<img width="900" alt="Screenshot 2021-09-16 at 10 33 51 AM" src="https://res.cloudinary.com/mozammalhossain/image/upload/v1639424209/FOCUS_SCREENSHOTS/landing3_bszuk9.png">
-<img width="900" alt="Screenshot 2021-09-16 at 10 34 03 AM" src="https://res.cloudinary.com/mozammalhossain/image/upload/v1639424209/FOCUS_SCREENSHOTS/landing4_ywx6t9.png">
-<img width="900" alt="Screenshot 2021-09-16 at 10 34 19 AM" src="https://res.cloudinary.com/mozammalhossain/image/upload/v1639424208/FOCUS_SCREENSHOTS/landing6_uhmyvy.png">
+<img width="900" alt="Screenshot 2021-09-16 at 10 32 01 AM" src="Project_Screenshots/Landing_Page_and_Authantication/1.png">
+<img width="900" alt="Screenshot 2021-09-16 at 10 33 26 AM" src="Project_Screenshots/Landing_Page_and_Authantication/2.png">
+<img width="900" alt="Screenshot 2021-09-16 at 10 33 51 AM" src="Project_Screenshots/Landing_Page_and_Authantication/3.png">
+<img width="900" alt="Screenshot 2021-09-16 at 10 34 03 AM" src="Project_Screenshots/Landing_Page_and_Authantication/4.png">
+<img width="900" alt="Screenshot 2021-09-16 at 10 34 19 AM" src="Project_Screenshots/Landing_Page_and_Authantication/5.png">
 
 ### STUDENTSHUB
 
 <br/>
-<img width="900" alt="Screenshot 2021-09-16 at 10 34 19 AM" src="https://res.cloudinary.com/mozammalhossain/image/upload/v1639424210/FOCUS_SCREENSHOTS/studnetshub1_apkl3k.png">
-<img width="900" alt="Screenshot 2021-09-16 at 10 34 19 AM" src="https://res.cloudinary.com/mozammalhossain/image/upload/v1639424211/FOCUS_SCREENSHOTS/studnetshub2_atf5td.png">
-<img width="900" alt="Screenshot 2021-09-16 at 10 34 19 AM" src="https://res.cloudinary.com/mozammalhossain/image/upload/v1639424669/FOCUS_SCREENSHOTS/studentshub3_zynghf.png">
-<img width="900" alt="Screenshot 2021-09-16 at 10 34 19 AM" src="https://res.cloudinary.com/mozammalhossain/image/upload/v1639424210/FOCUS_SCREENSHOTS/studentshub4_rh76es.png">
-<img width="900" alt="Screenshot 2021-09-16 at 10 34 19 AM" src="https://res.cloudinary.com/mozammalhossain/image/upload/v1639424210/FOCUS_SCREENSHOTS/studentshub5_adlhfh.png">
-<img width="900" alt="Screenshot 2021-09-16 at 10 34 19 AM" src="https://res.cloudinary.com/mozammalhossain/image/upload/v1639424209/FOCUS_SCREENSHOTS/studentshub6_oaouja.png">
+<img width="900" alt="Screenshot 2021-09-16 at 10 34 19 AM" src="Project_Screenshots/StudentsHub/1.png">
+<img width="900" alt="Screenshot 2021-09-16 at 10 34 19 AM" src="Project_Screenshots/StudentsHub/2.png">
+<img width="900" alt="Screenshot 2021-09-16 at 10 34 19 AM" src="Project_Screenshots/StudentsHub/3.png">
+<img width="900" alt="Screenshot 2021-09-16 at 10 34 19 AM" src="Project_Screenshots/StudentsHub/4.png">
+<img width="900" alt="Screenshot 2021-09-16 at 10 34 19 AM" src="Project_Screenshots/StudentsHub/5.png">
+<img width="900" alt="Screenshot 2021-09-16 at 10 34 19 AM" src="Project_Screenshots/StudentsHub/6.png">
 
 ### JOB RESOURCES & QA
 
-<img width="900" alt="Screenshot 2021-09-16 at 10 34 19 AM" src="https://res.cloudinary.com/mozammalhossain/image/upload/v1639424667/FOCUS_SCREENSHOTS/qa_wec4yc.png">
-<img width="900" alt="Screenshot 2021-09-16 at 10 34 19 AM" src="https://res.cloudinary.com/mozammalhossain/image/upload/v1639424667/FOCUS_SCREENSHOTS/qa2_wbs6t6.png">
-<img width="900" alt="Screenshot 2021-09-16 at 10 34 19 AM" src="https://res.cloudinary.com/mozammalhossain/image/upload/v1639424667/FOCUS_SCREENSHOTS/qa3_sxmezd.png">
+<img width="900" alt="Screenshot 2021-09-16 at 10 34 19 AM" src="Project_Screenshots/Job_Resources_&_QA/1.png">
+<img width="900" alt="Screenshot 2021-09-16 at 10 34 19 AM" src="Project_Screenshots/Job_Resources_&_QA/2.png">
+<img width="900" alt="Screenshot 2021-09-16 at 10 34 19 AM" src="Project_Screenshots/Job_Resources_&_QA/3.png">
 
 ### HIGHER STUDY & RESOURCES
 
-<img width="900" alt="Screenshot 2021-09-16 at 10 34 19 AM" src="https://res.cloudinary.com/mozammalhossain/image/upload/v1639424667/FOCUS_SCREENSHOTS/resource_qs4jk0.png">
-<img width="900" alt="Screenshot 2021-09-16 at 10 34 19 AM" src="https://res.cloudinary.com/mozammalhossain/image/upload/v1639424667/FOCUS_SCREENSHOTS/resource2_tm7cdy.png">
-<img width="900" alt="Screenshot 2021-09-16 at 10 34 19 AM" src="https://res.cloudinary.com/mozammalhossain/image/upload/v1639424667/FOCUS_SCREENSHOTS/resource3_admzem.png">
-<img width="900" alt="Screenshot 2021-09-16 at 10 34 19 AM" src="https://res.cloudinary.com/mozammalhossain/image/upload/v1639424669/FOCUS_SCREENSHOTS/search_gc3z7o.png">
+<img width="900" alt="Screenshot 2021-09-16 at 10 34 19 AM" src="Project_Screenshots/Higher_Study_&_Resources/1.png">
+<img width="900" alt="Screenshot 2021-09-16 at 10 34 19 AM" src="Project_Screenshots/Higher_Study_&_Resources/2.png">
+<img width="900" alt="Screenshot 2021-09-16 at 10 34 19 AM" src="Project_Screenshots/Higher_Study_&_Resources/3.png">
+<img width="900" alt="Screenshot 2021-09-16 at 10 34 19 AM" src="Project_Screenshots/Higher_Study_&_Resources/4.png">
 
 ### MESSAGE SECTION
 
 <img width="900" alt="Screenshot 2021-09-16 at 10 34 19 
-AM" src="https://res.cloudinary.com/mozammalhossain/image/upload/v1639424210/FOCUS_SCREENSHOTS/messanging1_zabyfn.png">
+AM" src="Project_Screenshots/Message_Section/1.png">
 
-<img width="900" alt="Screenshot 2021-09-16 at 10 34 19 AM" src="https://res.cloudinary.com/mozammalhossain/image/upload/v1639424210/FOCUS_SCREENSHOTS/messanging5_o7fnud.png">
+<img width="900" alt="Screenshot 2021-09-16 at 10 34 19 AM" src="Project_Screenshots/Message_Section/2.png">
