@@ -1,4 +1,3 @@
-# [Focus](https://www.focu-s.ml)
 
 ## Introduction
 
@@ -17,14 +16,12 @@ Another important element of our app is messaging. Students and alumni can begin
 - Semantic-UI
 - Cloudinary
 
-## [Deployed Version](https://www.focu-s.ml)
-
 ## Installation
 
 For cloning the project from github just type the following command
 
 ```sh
-git clone https://github.com/mozammalrahat/Focus.git
+git clone https://github.com/HackyCoder0951/Focus.git
 ```
 
 For installing the project in your machine go to the cloned directory and just type the following command
