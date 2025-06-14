@@ -8,7 +8,7 @@ const uploadDocument = async (document) => {
     // form.append("cloud_name", "mozammalhossain");
 
     const res = await axios.post(
-      "https://api.cloudinary.com/v1_1/mozammalhossain/auto/upload",
+      "https://api.cloudinary.com/v1_1/dkc85tef8/auto/upload",
       form
     );
     return res.data.url;
