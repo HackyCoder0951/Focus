@@ -33,8 +33,13 @@ const { commentPostQA } = require("./utilsServer/commentPostQA");
 io.on("connection", (socket) => {
   socket.on("join", async ({ userId }) => {
     const users = await addUser(userId, socket.id);
-    // console.log(users);
+    
+    // Emit connected users immediately
+    socket.emit("connectedUsers", {
+      users: users.filter((user) => user.userId !== userId),
+    });
 
+    // Then set up interval for updates
     setInterval(() => {
       socket.emit("connectedUsers", {
         users: users.filter((user) => user.userId !== userId),
@@ -156,16 +161,18 @@ io.on("connection", (socket) => {
     const receiverSocket = findConnectedUser(msgSendToUserId);
 
     if (receiverSocket) {
-      // WHEN YOU WANT TO SEND MESSAGE TO A PARTICULAR SOCKET
+      // Send message to receiver
       io.to(receiverSocket.socketId).emit("newMsgReceived", { newMsg });
       await checkUserPopUp(msgSendToUserId);
-    }
-    //
-    else {
+    } else {
+      // If receiver is not connected, mark message as unread
       await setMsgToUnread(msgSendToUserId);
     }
 
-    !error && socket.emit("msgSent", { newMsg });
+    // Send confirmation to sender
+    if (!error) {
+      socket.emit("msgSent", { newMsg });
+    }
   });
 
   socket.on("deleteMsg", async ({ userId, messagesWith, messageId }) => {
@@ -193,7 +200,9 @@ io.on("connection", (socket) => {
     }
   );
 
-  socket.on("disconnect", () => removeUser(socket.id));
+  socket.on("disconnect", () => {
+    removeUser(socket.id);
+  });
 });
 
 nextApp.prepare().then(() => {

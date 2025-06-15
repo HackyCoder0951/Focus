@@ -20,19 +20,22 @@ const scrollDivToBottom = (divRef) =>
   divRef.current.scrollIntoView({ behaviour: "smooth" });
 
 function Messages({ chatsData, user }) {
-  const [chats, setChats] = useState(chatsData);
-  const router = useRouter();
+  const [chats, setChats] = useState(chatsData || []);
+  const [connectedUsers, setConnectedUsers] = useState([]);
+  const [messages, setMessages] = useState([]);
+  const [newMessage, setNewMessage] = useState("");
+  const [newMessageReceived, setNewMessageReceived] = useState(null);
+  const [newMessageModal, showNewMessageModal] = useState(false);
+  const [sendMsgLoading, setSendMsgLoading] = useState(false);
+  const [showToastr, setShowToastr] = useState(false);
 
   const socket = useRef();
-  const [connectedUsers, setConnectedUsers] = useState([]);
+  const openChatId = useRef();
+  const messagesEndRef = useRef();
 
-  const [messages, setMessages] = useState([]);
   const [bannerData, setBannerData] = useState({ name: "", profilePicUrl: "" });
 
   const divRef = useRef();
-
-  // This ref is for persisting the state of query string in url throughout re-renders. This ref is the value of query string inside url
-  const openChatId = useRef("");
 
   useEffect(() => {
     const messageRead = async () => {
@@ -50,7 +53,6 @@ function Messages({ chatsData, user }) {
     messageRead();
   }, []);
 
-  //CONNECTION useEffect
   useEffect(() => {
     if (!socket.current) {
       socket.current = io(baseUrl);
@@ -60,19 +62,35 @@ function Messages({ chatsData, user }) {
       socket.current.emit("join", { userId: user._id });
 
       socket.current.on("connectedUsers", ({ users }) => {
-        users.length > 0 && setConnectedUsers(users);
+        setConnectedUsers(users);
       });
 
-      if (chats.length > 0 && !router.query.message) {
-        router.push(`/messages?message=${chats[0].messagesWith}`, undefined, {
-          shallow: true,
-        });
-      }
+      socket.current.on("newMsgReceived", async ({ newMsg }) => {
+        if (newMsg.sender === openChatId.current) {
+          setMessages((prev) => [...prev, newMsg]);
+          setChats((prev) => {
+            const previousChat = prev.find(
+              (chat) => chat.messagesWith === newMsg.sender
+            );
+            previousChat.lastMessage = newMsg.msg;
+            previousChat.date = newMsg.date;
+            return [...prev];
+          });
+        } else {
+          const { name, profilePicUrl } = await getUserInfo(newMsg.sender);
+          setNewMessageReceived({
+            ...newMsg,
+            senderName: name,
+            senderProfilePic: profilePicUrl,
+          });
+          showNewMessageModal(true);
+          newMsgSound(name);
+        }
+      });
     }
 
     return () => {
       if (socket.current) {
-        socket.current.emit("disconnect");
         socket.current.off();
       }
     };
@@ -83,7 +101,7 @@ function Messages({ chatsData, user }) {
     const loadMessages = () => {
       socket.current.emit("loadMessages", {
         userId: user._id,
-        messagesWith: router.query.message,
+        messagesWith: openChatId.current,
       });
 
       socket.current.on("messagesLoaded", async ({ chat }) => {
@@ -98,17 +116,17 @@ function Messages({ chatsData, user }) {
       });
 
       socket.current.on("noChatFound", async () => {
-        const { name, profilePicUrl } = await getUserInfo(router.query.message);
+        const { name, profilePicUrl } = await getUserInfo(openChatId.current);
 
         setBannerData({ name, profilePicUrl });
         setMessages([]);
 
-        openChatId.current = router.query.message;
+        openChatId.current = openChatId.current;
       });
     };
 
-    if (socket.current && router.query.message) loadMessages();
-  }, [router.query.message]);
+    if (socket.current && openChatId.current) loadMessages();
+  }, [openChatId.current]);
 
   const sendMsg = (msg) => {
     if (socket.current) {
@@ -119,88 +137,6 @@ function Messages({ chatsData, user }) {
       });
     }
   };
-
-  // Confirming msg is sent and receving the messages useEffect
-  useEffect(() => {
-    if (socket.current) {
-      socket.current.on("msgSent", ({ newMsg }) => {
-        if (newMsg.receiver === openChatId.current) {
-          setMessages((prev) => [...prev, newMsg]);
-
-          setChats((prev) => {
-            const previousChat = prev.find(
-              (chat) => chat.messagesWith === newMsg.receiver
-            );
-            previousChat.lastMessage = newMsg.msg;
-            previousChat.date = newMsg.date;
-
-            return [...prev];
-          });
-        }
-      });
-
-      socket.current.on("newMsgReceived", async ({ newMsg }) => {
-        let senderName;
-
-        // WHEN CHAT WITH SENDER IS CURRENTLY OPENED INSIDE YOUR BROWSER
-        if (newMsg.sender === openChatId.current) {
-          setMessages((prev) => [...prev, newMsg]);
-
-          setChats((prev) => {
-            const previousChat = prev.find(
-              (chat) => chat.messagesWith === newMsg.sender
-            );
-            previousChat.lastMessage = newMsg.msg;
-            previousChat.date = newMsg.date;
-
-            senderName = previousChat.name;
-
-            return [...prev];
-          });
-        }
-        //
-        else {
-          const ifPreviouslyMessaged =
-            chats.filter((chat) => chat.messagesWith === newMsg.sender).length >
-            0;
-
-          if (ifPreviouslyMessaged) {
-            setChats((prev) => {
-              const previousChat = prev.find(
-                (chat) => chat.messagesWith === newMsg.sender
-              );
-              previousChat.lastMessage = newMsg.msg;
-              previousChat.date = newMsg.date;
-
-              senderName = previousChat.name;
-
-              return [
-                previousChat,
-                ...prev.filter((chat) => chat.messagesWith !== newMsg.sender),
-              ];
-            });
-          }
-
-          //IF NO PREVIOUS CHAT WITH THE SENDER
-          else {
-            const { name, profilePicUrl } = await getUserInfo(newMsg.sender);
-            senderName = name;
-
-            const newChat = {
-              messagesWith: newMsg.sender,
-              name,
-              profilePicUrl,
-              lastMessage: newMsg.msg,
-              date: newMsg.date,
-            };
-            setChats((prev) => [newChat, ...prev]);
-          }
-        }
-
-        newMsgSound(senderName);
-      });
-    }
-  }, []);
 
   useEffect(() => {
     messages.length > 0 && scrollDivToBottom(divRef);
@@ -231,7 +167,7 @@ function Messages({ chatsData, user }) {
       setChats((prev) =>
         prev.filter((chat) => chat.messagesWith !== messagesWith)
       );
-      router.push("/messages", undefined, { shallow: true });
+      openChatId.current = null;
     } catch (error) {
       alert("Error deleting chat");
     }
@@ -243,7 +179,7 @@ function Messages({ chatsData, user }) {
         <Header
           icon="home"
           content="Go Back!"
-          onClick={() => router.push("/")}
+          onClick={() => openChatId.current = null}
           style={{ cursor: "pointer" }}
         />
         <Divider hidden />
@@ -274,7 +210,7 @@ function Messages({ chatsData, user }) {
               </Grid.Column>
 
               <Grid.Column width={12}>
-                {router.query.message && (
+                {openChatId.current && (
                   <>
                     <div
                       style={{
