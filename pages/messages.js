@@ -20,6 +20,7 @@ const scrollDivToBottom = (divRef) =>
   divRef.current.scrollIntoView({ behaviour: "smooth" });
 
 function Messages({ chatsData, user }) {
+  const router = useRouter();
   const [chats, setChats] = useState(chatsData || []);
   const [connectedUsers, setConnectedUsers] = useState([]);
   const [messages, setMessages] = useState([]);
@@ -36,6 +37,12 @@ function Messages({ chatsData, user }) {
   const [bannerData, setBannerData] = useState({ name: "", profilePicUrl: "" });
 
   const divRef = useRef();
+
+  useEffect(() => {
+    if (router.query.message) {
+      openChatId.current = router.query.message;
+    }
+  }, [router.query.message]);
 
   useEffect(() => {
     const messageRead = async () => {
@@ -179,7 +186,10 @@ function Messages({ chatsData, user }) {
         <Header
           icon="home"
           content="Go Back!"
-          onClick={() => openChatId.current = null}
+          onClick={() => {
+            openChatId.current = null;
+            router.push('/messages', undefined, { shallow: true });
+          }}
           style={{ cursor: "pointer" }}
         />
         <Divider hidden />
