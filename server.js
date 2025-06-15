@@ -149,29 +149,40 @@ io.on("connection", (socket) => {
   });
 
   socket.on("loadMessages", async ({ userId, messagesWith }) => {
-    const { chat, error } = await loadMessages(userId, messagesWith);
-
-    !error
-      ? socket.emit("messagesLoaded", { chat })
-      : socket.emit("noChatFound");
+    try {
+      const { chat, error } = await loadMessages(userId, messagesWith);
+      
+      if (!error) {
+        // Send messages immediately
+        socket.emit("messagesLoaded", { chat });
+      } else {
+        socket.emit("noChatFound");
+      }
+    } catch (error) {
+      console.error("Error loading messages:", error);
+      socket.emit("noChatFound");
+    }
   });
 
   socket.on("sendNewMsg", async ({ userId, msgSendToUserId, msg }) => {
-    const { newMsg, error } = await sendMsg(userId, msgSendToUserId, msg);
-    const receiverSocket = findConnectedUser(msgSendToUserId);
+    try {
+      const { newMsg, error } = await sendMsg(userId, msgSendToUserId, msg);
+      const receiverSocket = findConnectedUser(msgSendToUserId);
 
-    if (!error) {
-      // Broadcast to both sender and receiver immediately
-      socket.emit("newMsgReceived", { newMsg });
-      
-      if (receiverSocket) {
-        // Send to receiver
-        io.to(receiverSocket.socketId).emit("newMsgReceived", { newMsg });
-        await checkUserPopUp(msgSendToUserId);
-      } else {
-        // If receiver is not connected, mark message as unread
-        await setMsgToUnread(msgSendToUserId);
+      if (!error) {
+        // Send to sender
+        socket.emit("newMsgReceived", { newMsg });
+        
+        // Send to receiver if online
+        if (receiverSocket) {
+          io.to(receiverSocket.socketId).emit("newMsgReceived", { newMsg });
+          await checkUserPopUp(msgSendToUserId);
+        } else {
+          await setMsgToUnread(msgSendToUserId);
+        }
       }
+    } catch (error) {
+      console.error("Error sending message:", error);
     }
   });
 

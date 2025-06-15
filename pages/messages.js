@@ -77,7 +77,9 @@ function Messages({ chatsData, user }) {
       });
 
       socket.current.on("newMsgReceived", async ({ newMsg }) => {
-        setMessages((prev) => [...prev, newMsg]);
+        if (openChatId.current === newMsg.sender || openChatId.current === newMsg.receiver) {
+          setMessages((prev) => [...prev, newMsg]);
+        }
         
         setChats((prev) => {
           const previousChat = prev.find(
@@ -141,37 +143,40 @@ function Messages({ chatsData, user }) {
   // LOAD MESSAGES useEffect
   useEffect(() => {
     const loadMessages = () => {
-      socket.current.emit("loadMessages", {
-        userId: user._id,
-        messagesWith: openChatId.current,
-      });
-
-      socket.current.on("messagesLoaded", async ({ chat }) => {
-        setMessages(chat.messages);
-        setBannerData({
-          name: chat.messagesWith.name,
-          profilePicUrl: chat.messagesWith.profilePicUrl,
+      if (socket.current && openChatId.current) {
+        setMessages([]);
+        socket.current.emit("loadMessages", {
+          userId: user._id,
+          messagesWith: openChatId.current,
         });
 
-        openChatId.current = chat.messagesWith._id;
-        divRef.current && scrollDivToBottom(divRef);
-      });
+        socket.current.on("messagesLoaded", async ({ chat }) => {
+          setMessages(chat.messages);
+          setBannerData({
+            name: chat.messagesWith.name,
+            profilePicUrl: chat.messagesWith.profilePicUrl,
+          });
 
-      socket.current.on("noChatFound", async () => {
-        const { name, profilePicUrl } = await getUserInfo(openChatId.current);
+          openChatId.current = chat.messagesWith._id;
+          divRef.current && scrollDivToBottom(divRef);
+        });
 
-        setBannerData({ name, profilePicUrl });
-        setMessages([]);
+        socket.current.on("noChatFound", async () => {
+          const { name, profilePicUrl } = await getUserInfo(openChatId.current);
 
-        openChatId.current = openChatId.current;
-      });
+          setBannerData({ name, profilePicUrl });
+          setMessages([]);
+
+          openChatId.current = openChatId.current;
+        });
+      }
     };
 
-    if (socket.current && openChatId.current) loadMessages();
+    loadMessages();
   }, [openChatId.current]);
 
   const sendMsg = (msg) => {
-    if (socket.current && msg.trim()) {
+    if (socket.current && msg.trim() && openChatId.current) {
       setSendMsgLoading(true);
       socket.current.emit("sendNewMsg", {
         userId: user._id,
