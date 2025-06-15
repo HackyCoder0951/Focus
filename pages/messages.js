@@ -62,7 +62,11 @@ function Messages({ chatsData, user }) {
 
   useEffect(() => {
     if (!socket.current) {
-      socket.current = io(baseUrl);
+      socket.current = io(baseUrl, {
+        reconnection: true,
+        reconnectionAttempts: 5,
+        reconnectionDelay: 1000,
+      });
     }
 
     if (socket.current) {
@@ -79,10 +83,13 @@ function Messages({ chatsData, user }) {
             const previousChat = prev.find(
               (chat) => chat.messagesWith === newMsg.sender
             );
-            previousChat.lastMessage = newMsg.msg;
-            previousChat.date = newMsg.date;
+            if (previousChat) {
+              previousChat.lastMessage = newMsg.msg;
+              previousChat.date = newMsg.date;
+            }
             return [...prev];
           });
+          setTimeout(() => scrollDivToBottom(divRef), 100);
         } else {
           const { name, profilePicUrl } = await getUserInfo(newMsg.sender);
           setNewMessageReceived({
@@ -93,6 +100,30 @@ function Messages({ chatsData, user }) {
           showNewMessageModal(true);
           newMsgSound(name);
         }
+      });
+
+      socket.current.on("msgSent", ({ newMsg }) => {
+        setMessages((prev) => [...prev, newMsg]);
+        setChats((prev) => {
+          const previousChat = prev.find(
+            (chat) => chat.messagesWith === newMsg.receiver
+          );
+          if (previousChat) {
+            previousChat.lastMessage = newMsg.msg;
+            previousChat.date = newMsg.date;
+          }
+          return [...prev];
+        });
+        setTimeout(() => scrollDivToBottom(divRef), 100);
+      });
+
+      socket.current.on("connect_error", (error) => {
+        console.error("Socket connection error:", error);
+      });
+
+      socket.current.on("reconnect", (attemptNumber) => {
+        console.log("Socket reconnected after", attemptNumber, "attempts");
+        socket.current.emit("join", { userId: user._id });
       });
     }
 
@@ -137,11 +168,13 @@ function Messages({ chatsData, user }) {
 
   const sendMsg = (msg) => {
     if (socket.current) {
+      setSendMsgLoading(true);
       socket.current.emit("sendNewMsg", {
         userId: user._id,
         msgSendToUserId: openChatId.current,
         msg,
       });
+      setSendMsgLoading(false);
     }
   };
 
