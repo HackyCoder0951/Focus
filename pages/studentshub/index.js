@@ -50,15 +50,13 @@ function Index({ user, postsData, errorLoading }) {
       socket.current.on("newMsgReceived", async ({ newMsg }) => {
         const { name, profilePicUrl } = await getUserInfo(newMsg.sender);
 
-        if (user.newMessagePopup) {
-          setNewMessageReceived({
-            ...newMsg,
-            senderName: name,
-            senderProfilePic: profilePicUrl,
-          });
-          showNewMessageModal(true);
-          newMsgSound(name);
-        }
+        setNewMessageReceived({
+          ...newMsg,
+          senderName: name,
+          senderProfilePic: profilePicUrl,
+        });
+        showNewMessageModal(true);
+        newMsgSound(name);
       });
     }
 
