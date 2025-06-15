@@ -3,9 +3,24 @@ import App from "next/app";
 import { destroyCookie, parseCookies } from "nookies";
 import "react-toastify/dist/ReactToastify.css";
 import "semantic-ui-css/semantic.min.css";
+import "../public/global.css";
 import Layout from "../components/Layout/Layout";
 import { redirectUser } from "../utils/authUser";
 import baseUrl from "../utils/baseUrl";
+
+// Add global styles
+const globalStyles = `
+  html, body {
+    background-color: rgb(244, 177, 22) !important;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+  }
+  #__next {
+    background-color: rgb(244, 177, 22) !important;
+    min-height: 100vh;
+  }
+`;
 
 class MyApp extends App {
   static async getInitialProps({ Component, ctx }) {

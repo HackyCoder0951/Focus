@@ -36,12 +36,12 @@ function Layout({ children, user }) {
   Router.onRouteChangeError = () => nprogress.done();
 
   return (
-    <>
+    <div style={{ backgroundColor: "rgb(244, 177, 22)", minHeight: "100vh" }}>
       <HeadTags />
       {user ? (
         router.pathname === "/" ? (
           <>
-            <Container text style={{ paddingTop: "1rem" }}>
+            <Container text style={{ paddingTop: "1rem", backgroundColor: "transparent" }}>
               {children}
             </Container>
           </>
@@ -49,10 +49,10 @@ function Layout({ children, user }) {
           <>
             <style>{mediaStyles}</style>
             <MediaContextProvider>
-              <div style={{ marginLeft: "1rem", marginRight: "1rem" }}>
+              <div style={{ marginLeft: "1rem", marginRight: "1rem", backgroundColor: "transparent" }}>
                 <Media greaterThanOrEqual="computer">
                   <Ref innerRef={contextRef}>
-                    <Grid>
+                    <Grid style={{ backgroundColor: "transparent" }}>
                       <Grid.Column floated="left" width={3}>
                         <Sticky context={contextRef}>
                           <SideMenu user={user} pc />
@@ -62,7 +62,7 @@ function Layout({ children, user }) {
                       <Grid.Column width={10}>
                         <div
                           className="newfeed"
-                          style={{ marginLeft: "45px", marginTop: "12px" }}
+                          style={{ marginLeft: "45px", marginTop: "12px", backgroundColor: "transparent" }}
                         >
                           <Visibility context={contextRef}>
                             {children}
@@ -72,7 +72,7 @@ function Layout({ children, user }) {
 
                       <Grid.Column floated="left" width={3}>
                         <Sticky context={contextRef}>
-                          <Segment basic>
+                          <Segment basic style={{ backgroundColor: "transparent" }}>
                             <Search />
                           </Segment>
                         </Sticky>
@@ -83,7 +83,7 @@ function Layout({ children, user }) {
 
                 <Media between={["tablet", "computer"]}>
                   <Ref innerRef={contextRef}>
-                    <Grid>
+                    <Grid style={{ backgroundColor: "transparent" }}>
                       <Grid.Column floated="left" width={1}>
                         <Sticky context={contextRef}>
                           <SideMenu user={user} pc={false} />
@@ -93,7 +93,7 @@ function Layout({ children, user }) {
                       <Grid.Column width={15}>
                         <div
                           className="newfeed"
-                          style={{ marginLeft: "45px", marginTop: "12px" }}
+                          style={{ marginLeft: "45px", marginTop: "12px", backgroundColor: "transparent" }}
                         >
                           <Visibility context={contextRef}>
                             {children}
@@ -103,7 +103,7 @@ function Layout({ children, user }) {
 
                       <Grid.Column floated="left" width={1}>
                         <Sticky context={contextRef}>
-                          <Segment basic>
+                          <Segment basic style={{ backgroundColor: "transparent" }}>
                             <Search />
                           </Segment>
                         </Sticky>
@@ -114,7 +114,7 @@ function Layout({ children, user }) {
 
                 <Media between={["mobile", "tablet"]}>
                   <Ref innerRef={contextRef}>
-                    <Grid>
+                    <Grid style={{ backgroundColor: "transparent" }}>
                       <Grid.Column floated="left" width={2}>
                         <Sticky context={contextRef}>
                           <SideMenu user={user} pc={false} />
@@ -124,7 +124,7 @@ function Layout({ children, user }) {
                       <Grid.Column width={14}>
                         <div
                           className="newfeed"
-                          style={{ marginLeft: "45px", marginTop: "12px" }}
+                          style={{ marginLeft: "45px", marginTop: "12px", backgroundColor: "transparent" }}
                         >
                           <Visibility context={contextRef}>
                             {children}
@@ -134,7 +134,7 @@ function Layout({ children, user }) {
 
                       <Grid.Column floated="left" width={1}>
                         <Sticky context={contextRef}>
-                          <Segment basic>
+                          <Segment basic style={{ backgroundColor: "transparent" }}>
                             <Search />
                           </Segment>
                         </Sticky>
@@ -145,7 +145,7 @@ function Layout({ children, user }) {
 
                 <Media between={["zero", "mobile"]}>
                   <MobileHeader user={user} />
-                  <Grid>
+                  <Grid style={{ backgroundColor: "transparent" }}>
                     <Grid.Column>{children}</Grid.Column>
                   </Grid>
                 </Media>
@@ -156,12 +156,12 @@ function Layout({ children, user }) {
       ) : (
         <>
           <Navbar />
-          <Container text style={{ paddingTop: "1rem" }}>
+          <Container text style={{ paddingTop: "1rem", backgroundColor: "transparent" }}>
             {children}
           </Container>
         </>
       )}
-    </>
+    </div>
   );
 }
 
