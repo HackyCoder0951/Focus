@@ -77,20 +77,24 @@ function Messages({ chatsData, user }) {
       });
 
       socket.current.on("newMsgReceived", async ({ newMsg }) => {
-        if (newMsg.sender === openChatId.current) {
-          setMessages((prev) => [...prev, newMsg]);
-          setChats((prev) => {
-            const previousChat = prev.find(
-              (chat) => chat.messagesWith === newMsg.sender
-            );
-            if (previousChat) {
-              previousChat.lastMessage = newMsg.msg;
-              previousChat.date = newMsg.date;
-            }
-            return [...prev];
-          });
-          setTimeout(() => scrollDivToBottom(divRef), 100);
-        } else {
+        setMessages((prev) => [...prev, newMsg]);
+        
+        setChats((prev) => {
+          const previousChat = prev.find(
+            (chat) => chat.messagesWith === newMsg.sender || chat.messagesWith === newMsg.receiver
+          );
+          if (previousChat) {
+            previousChat.lastMessage = newMsg.msg;
+            previousChat.date = newMsg.date;
+            const updatedChats = prev.filter(chat => chat.messagesWith !== previousChat.messagesWith);
+            return [previousChat, ...updatedChats];
+          }
+          return prev;
+        });
+
+        setTimeout(() => scrollDivToBottom(divRef), 100);
+
+        if (newMsg.sender !== user._id) {
           const { name, profilePicUrl } = await getUserInfo(newMsg.sender);
           setNewMessageReceived({
             ...newMsg,
@@ -167,7 +171,7 @@ function Messages({ chatsData, user }) {
   }, [openChatId.current]);
 
   const sendMsg = (msg) => {
-    if (socket.current) {
+    if (socket.current && msg.trim()) {
       setSendMsgLoading(true);
       socket.current.emit("sendNewMsg", {
         userId: user._id,

@@ -160,18 +160,18 @@ io.on("connection", (socket) => {
     const { newMsg, error } = await sendMsg(userId, msgSendToUserId, msg);
     const receiverSocket = findConnectedUser(msgSendToUserId);
 
-    if (receiverSocket) {
-      // Send message to receiver
-      io.to(receiverSocket.socketId).emit("newMsgReceived", { newMsg });
-      await checkUserPopUp(msgSendToUserId);
-    } else {
-      // If receiver is not connected, mark message as unread
-      await setMsgToUnread(msgSendToUserId);
-    }
-
-    // Send confirmation to sender
     if (!error) {
-      socket.emit("msgSent", { newMsg });
+      // Broadcast to both sender and receiver immediately
+      socket.emit("newMsgReceived", { newMsg });
+      
+      if (receiverSocket) {
+        // Send to receiver
+        io.to(receiverSocket.socketId).emit("newMsgReceived", { newMsg });
+        await checkUserPopUp(msgSendToUserId);
+      } else {
+        // If receiver is not connected, mark message as unread
+        await setMsgToUnread(msgSendToUserId);
+      }
     }
   });
 
