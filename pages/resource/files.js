@@ -110,7 +110,9 @@ function Files({ user, previousFiles }) {
         newFile.name,
         newFile.type,
         newFile.topic,
-        documentURL,
+        documentURL.url,
+        documentURL.public_id,
+        documentURL.resource_type,
         setFilesList,
         setNewFile,
         setError

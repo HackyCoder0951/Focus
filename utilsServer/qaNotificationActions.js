@@ -112,6 +112,8 @@ const removeCommentNotification = async (
         notification.answerId === answerId
     );
 
+    if (!notificationToRemove) return;
+
     const indexOf = await user.qanotifications
       .map((notification) => notification._id.toString())
       .indexOf(notificationToRemove._id.toString());

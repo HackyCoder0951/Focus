@@ -12,6 +12,10 @@ const FileSchema = new Schema(
     fileType: { type: String, required: true },
 
     fileTopic: { type: String },
+
+    cloudinaryId: { type: String },
+
+    cloudinaryResourceType: { type: String },
   },
   { timestamps: true }
 );

@@ -13,6 +13,8 @@ export const submitNewFile = async (
   fileType,
   fileTopic,
   fileUrl,
+  cloudinaryId,
+  cloudinaryResourceType,
   setFilesList,
   setNewFile,
   setError
@@ -23,6 +25,8 @@ export const submitNewFile = async (
       fileType,
       fileTopic,
       fileUrl,
+      cloudinaryId,
+      cloudinaryResourceType,
     });
 
     setFilesList((prev) => [res.data, ...prev]);
