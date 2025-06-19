@@ -108,11 +108,11 @@ function Files({ user, previousFiles }) {
     {
       await submitNewFile(
         newFile.name,
-        newFile.type,
+        documentURL.fileType,
         newFile.topic,
-        documentURL.url,
-        documentURL.public_id,
-        documentURL.resource_type,
+        documentURL.fileUrl,
+        documentURL.cloudinaryId,
+        documentURL.cloudinaryResourceType,
         setFilesList,
         setNewFile,
         setError
