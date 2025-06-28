@@ -2,15 +2,6 @@
 
 This document provides step-by-step instructions for setting up the backend services required for the Focus social media platform.
 
-## 📋 Table of Contents
-
-1. [MongoDB Setup](#mongodb-setup)
-2. [Cloudinary Setup](#cloudinary-setup)
-3. [SendGrid Setup](#sendgrid-setup)
-4. [Environment Configuration](#environment-configuration)
-5. [Testing the Setup](#testing-the-setup)
-
----
 
 ## 🗄️ MongoDB Setup
 
