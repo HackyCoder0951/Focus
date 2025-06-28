@@ -1,89 +1,248 @@
+# Focus - Social Media Platform
 
-## Introduction
+A comprehensive social media platform built with Next.js and Node.js, featuring real-time messaging, file sharing, Q&A sections, and resource management.
 
-We created this full-stack community-based networking web app (FOCUS). It serves as a link between current undergraduate students and their former classmates. Our app has three sections: studentshub, job resources & qa, and higher education & resources. Studentshub is a place where current students can post, like, and comment on other student's posts. Both current students and graduates can benefit from the job resources and Q&A. Alumni can post job openings here, and current students can ask questions about topics they don't understand and share their issues with alumni.
-All of the questions asked by current students can be answered by alumni. Higher studies and resources make up the final section of our software. Here, alumni or students can submit files that will be useful to other students. Scholarships news can be posted by alumni or students. Alumni who are studying at different institutions have their profiles depending on which university they attend.
-Another important element of our app is messaging. Students and alumni can begin conversing in real-time. Real-time notification support is also available in our app.
+## 🚀 Features
 
-## Technologies used
+- **User Authentication & Authorization** - JWT-based authentication with role-based access
+- **Real-time Messaging** - Socket.io powered instant messaging
+- **Social Features** - Posts, likes, comments, follow/unfollow
+- **Q&A Section** - Dedicated question and answer platform
+- **Resource Management** - File upload and sharing with Cloudinary integration
+- **Notifications** - Real-time notifications for likes, comments, and messages
+- **Responsive Design** - Mobile-friendly UI with Semantic UI React
+- **File Management** - Document upload, download, and deletion
 
-- Next.js
-- React
-- Node.js
-- Express.js
-- MongoDB
-- Socket.io
-- Semantic-UI
-- Cloudinary
+## 🛠️ Technologies Used
 
-## Installation
+### Frontend
+- **Next.js 10.0.3** - React framework for server-side rendering
+- **React 16.13.1** - UI library
+- **Semantic UI React 2.0.0** - UI component library
+- **Socket.io Client 2.4.0** - Real-time communication
+- **Axios 0.21.0** - HTTP client
+- **React Toastify 6.0.5** - Toast notifications
+- **React Infinite Scroll 5.1.0** - Infinite scrolling
+- **NProgress 0.2.0** - Progress bars
 
-For cloning the project from github just type the following command
+### Backend
+- **Node.js** - JavaScript runtime
+- **Express.js 4.17.1** - Web framework
+- **Socket.io 2.4.1** - Real-time bidirectional communication
+- **MongoDB 5.9.14** - NoSQL database
+- **Mongoose 5.9.14** - MongoDB object modeling
+- **JWT 8.5.1** - JSON Web Tokens for authentication
+- **Bcryptjs 2.4.3** - Password hashing
+- **Cloudinary 2.7.0** - Cloud storage for files and images
+- **Nodemailer 6.7.2** - Email functionality
+- **Validator 13.0.0** - Data validation
 
-```sh
-git clone https://github.com/HackyCoder0951/Focus.git
+### Development Tools
+- **Nodemon 2.0.15** - Auto-restart server during development
+- **Cross-env 7.0.3** - Cross-platform environment variables
+- **Dotenv 8.2.0** - Environment variable management
+
+## 📋 Prerequisites
+
+Before running this project, make sure you have the following installed:
+
+- **Node.js** (v14 or higher)
+- **npm** or **yarn**
+- **MongoDB** (local installation or MongoDB Atlas)
+- **Cloudinary Account** (for file storage)
+
+## 🔧 Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd Focus
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Environment Setup**
+   
+   Create a `config.env` file in the root directory with the following variables:
+   ```env
+   # Database
+   MONGODB_URI=your_mongodb_connection_string
+   
+   # JWT
+   JWT_SECRET=your_jwt_secret_key
+   
+   # Cloudinary
+   CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
+   CLOUDINARY_API_KEY=your_cloudinary_api_key
+   CLOUDINARY_API_SECRET=your_cloudinary_api_secret
+   
+   # Email (Optional - for password reset)
+   SENDGRID_API_KEY=your_sendgrid_api_key
+   EMAIL_FROM=your_email@domain.com
+   
+   # Server
+   PORT=3000
+   NODE_ENV=development
+   ```
+
+4. **Cloudinary Setup**
+   - Sign up at [Cloudinary](https://cloudinary.com/)
+   - Create upload presets:
+     - `social_media` for images
+     - `document_preset` for documents
+   - Note down your cloud name, API key, and API secret
+
+5. **MongoDB Setup**
+   - Install MongoDB locally or use MongoDB Atlas
+   - Create a database for the project
+   - Update the `MONGODB_URI` in your config.env
+
+## 🚀 Running the Project
+
+### Development Mode
+```bash
+npm run dev
+```
+This will start the development server with hot reloading.
+
+### Production Build
+```bash
+npm run build
+npm start
 ```
 
-For installing the project in your machine go to the cloned directory and just type the following command
-
-```sh
-// with npm
-npm install
-
-// with yarn
-yarn install
+### Legacy Mode (if needed)
+```bash
+npm run dev:legacy
 ```
 
-## Start the App
+The application will be available at `http://localhost:3000`
 
-For starting the app we need to just run the following command
+## 📁 Project Structure
 
-```sh
-nodemon server.js
+```
+Focus/
+├── api/                    # API routes
+│   ├── auth.js            # Authentication endpoints
+│   ├── chats.js           # Chat functionality
+│   ├── notifications.js   # Notification system
+│   ├── posts.js           # Post management
+│   ├── qa/                # Q&A section APIs
+│   └── resource/          # File management APIs
+├── components/            # React components
+│   ├── Chats/            # Chat components
+│   ├── Common/           # Shared components
+│   ├── Home/             # Home page components
+│   ├── Layout/           # Layout components
+│   ├── Messages/         # Message components
+│   ├── Notifications/    # Notification components
+│   ├── Post/             # Post components
+│   └── Profile/          # Profile components
+├── middleware/           # Express middleware
+├── models/              # Mongoose models
+├── pages/               # Next.js pages
+├── public/              # Static assets
+├── utils/               # Frontend utilities
+├── utilsServer/         # Backend utilities
+├── server.js            # Express server
+└── next.config.js       # Next.js configuration
 ```
 
-## Overall Project Demonstration
+## 🔐 Authentication
 
-<!-- Fo better quality click [FOCUS](https://youtu.be/kWAyZxIcgN8) -->
+The application uses JWT-based authentication with the following features:
+- User registration and login
+- Password reset via email
+- Role-based access control (user, root)
+- Protected routes and API endpoints
 
-<!-- https://user-images.githubusercontent.com/40220345/145923330-db91e2aa-b98d-4277-8787-880d5edd38a5.mov -->
+## 💬 Real-time Features
 
-## Screenshots
+- **Instant Messaging**: Real-time chat using Socket.io
+- **Live Notifications**: Instant notifications for likes, comments, and messages
+- **Online Status**: Real-time user online/offline status
+- **Live Updates**: Real-time post updates and interactions
 
-### Landing Page and Authantication
+## 📁 File Management
 
-<img width="900" alt="Screenshot 2021-09-16 at 10 32 01 AM" src="Project_Screenshots/Landing_Page_and_Authantication/1.png">
-<img width="900" alt="Screenshot 2021-09-16 at 10 33 26 AM" src="Project_Screenshots/Landing_Page_and_Authantication/2.png">
-<img width="900" alt="Screenshot 2021-09-16 at 10 33 51 AM" src="Project_Screenshots/Landing_Page_and_Authantication/3.png">
-<img width="900" alt="Screenshot 2021-09-16 at 10 34 03 AM" src="Project_Screenshots/Landing_Page_and_Authantication/4.png">
-<img width="900" alt="Screenshot 2021-09-16 at 10 34 19 AM" src="Project_Screenshots/Landing_Page_and_Authantication/5.png">
+- **Image Upload**: Profile pictures and post images
+- **Document Upload**: PDFs, documents, and other files
+- **Cloud Storage**: All files stored on Cloudinary
+- **File Deletion**: Automatic cleanup from both database and cloud storage
 
-### STUDENTSHUB
+## 🎨 UI/UX
 
-<br/>
-<img width="900" alt="Screenshot 2021-09-16 at 10 34 19 AM" src="Project_Screenshots/StudentsHub/1.png">
-<img width="900" alt="Screenshot 2021-09-16 at 10 34 19 AM" src="Project_Screenshots/StudentsHub/2.png">
-<img width="900" alt="Screenshot 2021-09-16 at 10 34 19 AM" src="Project_Screenshots/StudentsHub/3.png">
-<img width="900" alt="Screenshot 2021-09-16 at 10 34 19 AM" src="Project_Screenshots/StudentsHub/4.png">
-<img width="900" alt="Screenshot 2021-09-16 at 10 34 19 AM" src="Project_Screenshots/StudentsHub/5.png">
-<img width="900" alt="Screenshot 2021-09-16 at 10 34 19 AM" src="Project_Screenshots/StudentsHub/6.png">
+- **Responsive Design**: Mobile-first approach
+- **Semantic UI**: Modern, accessible components
+- **Dark/Light Mode**: Theme support
+- **Loading States**: Smooth user experience
+- **Error Handling**: User-friendly error messages
 
-### JOB RESOURCES & QA
+## 🔧 Configuration
 
-<img width="900" alt="Screenshot 2021-09-16 at 10 34 19 AM" src="Project_Screenshots/Job_Resources_&_QA/1.png">
-<img width="900" alt="Screenshot 2021-09-16 at 10 34 19 AM" src="Project_Screenshots/Job_Resources_&_QA/2.png">
-<img width="900" alt="Screenshot 2021-09-16 at 10 34 19 AM" src="Project_Screenshots/Job_Resources_&_QA/3.png">
+### Environment Variables
+- `MONGODB_URI`: MongoDB connection string
+- `JWT_SECRET`: Secret key for JWT tokens
+- `CLOUDINARY_CLOUD_NAME`: Cloudinary cloud name
+- `CLOUDINARY_API_KEY`: Cloudinary API key
+- `CLOUDINARY_API_SECRET`: Cloudinary API secret
+- `SENDGRID_API_KEY`: SendGrid API key for emails
+- `EMAIL_FROM`: Sender email address
+- `PORT`: Server port (default: 3000)
+- `NODE_ENV`: Environment (development/production)
 
-### HIGHER STUDY & RESOURCES
+### Cloudinary Configuration
+- Upload presets must be configured in Cloudinary dashboard
+- Resource types: `image`, `video`, `raw` (for documents)
+- Automatic file deletion on user deletion
 
-<img width="900" alt="Screenshot 2021-09-16 at 10 34 19 AM" src="Project_Screenshots/Higher_Study_&_Resources/1.png">
-<img width="900" alt="Screenshot 2021-09-16 at 10 34 19 AM" src="Project_Screenshots/Higher_Study_&_Resources/2.png">
-<img width="900" alt="Screenshot 2021-09-16 at 10 34 19 AM" src="Project_Screenshots/Higher_Study_&_Resources/3.png">
-<img width="900" alt="Screenshot 2021-09-16 at 10 34 19 AM" src="Project_Screenshots/Higher_Study_&_Resources/4.png">
+## 🚀 Deployment
 
-### MESSAGE SECTION
+### Vercel (Recommended)
+1. Connect your GitHub repository to Vercel
+2. Set environment variables in Vercel dashboard
+3. Deploy automatically on push
 
-<img width="900" alt="Screenshot 2021-09-16 at 10 34 19 
-AM" src="Project_Screenshots/Message_Section/1.png">
+### Heroku
+1. Create Heroku app
+2. Set environment variables
+3. Deploy using Heroku CLI or GitHub integration
 
-<img width="900" alt="Screenshot 2021-09-16 at 10 34 19 AM" src="Project_Screenshots/Message_Section/2.png">
+### Other Platforms
+- Ensure environment variables are set
+- Build the project: `npm run build`
+- Start the server: `npm start`
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
+
+## 📝 License
+
+This project is licensed under the MIT License.
+
+## 🆘 Support
+
+For support and questions:
+- Create an issue in the repository
+- Check the documentation
+- Review the code comments
+
+## 🔄 Updates
+
+Keep your dependencies updated:
+```bash
+npm update
+npm audit fix
+```
+
+---
+
+**Happy Coding! 🎉**
