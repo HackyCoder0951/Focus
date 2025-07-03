@@ -3,8 +3,7 @@
   "version": "0.1.0",
   "private": false,
   "scripts": {
-    "dev": " cross-env nodemon server.js",
-    "dev:legacy": "NODE_OPTIONS='--openssl-legacy-provider' next dev",
+    "dev": " cross-env nodemon server.js next dev"
     "build": "next build",
     "start": "NODE_ENV=production node server.js"
   },
